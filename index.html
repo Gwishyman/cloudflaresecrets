@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worker Secret Test</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; }
+    #secret { font-weight: bold; color: darkgreen; }
+  </style>
+</head>
+<body>
+  <h1>Worker Secret Test</h1>
+  <p>The secret is: <span id="secret">Loading...</span></p>
+
+  <script>
+    async function getSecret() {
+      try {
+        const res = await fetch("https://backend.gwishyman.workers.dev/get-data");
+        if (!res.ok) throw new Error(`HTTP error! ${res.status}`);
+        const json = await res.json();
+
+        // Display the secret in the HTML
+        document.getElementById("secret").textContent = json.data;
+      } catch (err) {
+        console.error(err);
+        document.getElementById("secret").textContent = "Failed to load secret";
+      }
+    }
+
+    getSecret();
+  </script>
+</body>
+</html>
