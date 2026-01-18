@@ -3,31 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Worker Secret Display</title>
+  <title>Secret Proxy Test</title>
   <style>
     body { font-family: sans-serif; padding: 2rem; }
-    #secret { font-weight: bold; color: darkgreen; }
+    #message { font-weight: bold; color: darkgreen; }
   </style>
 </head>
 <body>
-  <h1>Worker Secret Display</h1>
-  <p>The secret is: <span id="secret">Loading...</span></p>
+  <h1>Secret Proxy Test</h1>
+  <p>The message is: <span id="message">Loading...</span></p>
 
   <script>
-    async function getSecret() {
+    async function getMessage() {
       try {
-        const res = await fetch("https://backend.gwishyman.workers.dev/get-data");
-        if (!res.ok) throw new Error(`HTTP error! ${res.status}`);
+        const res = await fetch("https://backend.gwishyman.workers.dev/get-message");
         const json = await res.json();
 
-        // Display secret directly in HTML
-        document.getElementById("secret").textContent = json.data;
+        // Display only the derived message
+        document.getElementById("message").textContent = json.message;
       } catch {
-        document.getElementById("secret").textContent = "Failed to load secret";
+        document.getElementById("message").textContent = "Failed to load message";
       }
     }
 
-    getSecret(); // fetch and display the secret
+    getMessage();
   </script>
 </body>
 </html>
